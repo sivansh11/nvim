@@ -937,6 +937,9 @@ require('lazy').setup({
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
+  {
+    'xiyaowong/transparent.nvim',
+  },
   -- gruvbox theme
   {
     'ellisonleao/gruvbox.nvim',
