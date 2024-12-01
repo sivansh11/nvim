@@ -950,6 +950,17 @@ require('lazy').setup({
   {
     'xiyaowong/transparent.nvim',
   },
+  -- sainnhe/everforest
+  {
+    'sainnhe/everforest',
+    priority = 1000,
+    config = function()
+      vim.o.background = 'dark'
+      vim.cmd [[colorscheme everforest]]
+      vim.g.everforest_background = 'soft'
+    end,
+    opts = ...,
+  },
   -- gruvbox theme
   {
     'ellisonleao/gruvbox.nvim',
