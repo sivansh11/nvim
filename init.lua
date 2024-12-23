@@ -93,6 +93,8 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+vim.o.termguicolors = true
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -109,13 +111,6 @@ vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
-
--- shiftwidth
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
--- vim.opt.expandtab = true
--- vim.bo.softtabstop = 2
--- vim.opt.smarttab = true
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -242,7 +237,7 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -955,9 +950,9 @@ require('lazy').setup({
     'sainnhe/everforest',
     priority = 1000,
     config = function()
-      vim.o.background = 'dark'
-      vim.cmd [[colorscheme everforest]]
-      vim.g.everforest_background = 'soft'
+      -- vim.o.background = 'dark'
+      -- vim.cmd [[colorscheme everforest]]
+      -- vim.g.everforest_background = 'soft'
     end,
     opts = ...,
   },
@@ -966,8 +961,8 @@ require('lazy').setup({
     'ellisonleao/gruvbox.nvim',
     priority = 1000,
     config = function()
-      -- vim.o.background = 'dark' -- or "light" for light mode
-      -- vim.cmd [[colorscheme gruvbox]]
+      vim.o.background = 'dark' -- or "light" for light mode
+      vim.cmd [[colorscheme gruvbox]]
     end,
     opts = ...,
   },
@@ -1014,13 +1009,13 @@ require('lazy').setup({
       { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
     },
   },
-  {
-    'startup-nvim/startup.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-file-browser.nvim' },
-    config = function()
-      require('startup').setup()
-    end,
-  },
+  --   {
+  --     'startup-nvim/startup.nvim',
+  --     dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-file-browser.nvim' },
+  --     config = function()
+  --       require('startup').setup()
+  --     end,
+  --   },
   {
     'nvim-neo-tree/neo-tree.nvim',
     config = function()
@@ -1058,3 +1053,11 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- shiftwidth
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+-- vim.bo.softtabstop = 2
+-- vim.opt.smarttab = true
+vim.keymap.set('n', '<leader>sc', '<cmd>source ~/.config/nvim/init.lua<CR>', { desc = '[S]ource [C]onfig' })
