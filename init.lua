@@ -417,8 +417,8 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>s.', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader><leader>', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -597,14 +597,14 @@ require('lazy').setup({
       })
 
       -- Change diagnostic symbols in the sign column (gutter)
-      -- if vim.g.have_nerd_font then
-      --   local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
-      --   local diagnostic_signs = {}
-      --   for type, icon in pairs(signs) do
-      --     diagnostic_signs[vim.diagnostic.severity[type]] = icon
-      --   end
-      --   vim.diagnostic.config { signs = { text = diagnostic_signs } }
-      -- end
+      if vim.g.have_nerd_font then
+        local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
+        local diagnostic_signs = {}
+        for type, icon in pairs(signs) do
+          diagnostic_signs[vim.diagnostic.severity[type]] = icon
+        end
+        vim.diagnostic.config { signs = { text = diagnostic_signs } }
+      end
 
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
@@ -636,6 +636,18 @@ require('lazy').setup({
         -- ts_ls = {},
         --
 
+        slangd = {
+          settings = {
+            slang = {
+              predefinedMacros = { 'MY_VALUE_MACRO=1' },
+              inlayHints = {
+                deducedTypes = true,
+                parameterNames = true,
+              },
+            },
+          },
+        },
+
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -666,7 +678,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      -- require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
         handlers = {
@@ -950,22 +962,23 @@ require('lazy').setup({
     'sainnhe/everforest',
     priority = 1000,
     config = function()
-      -- vim.o.background = 'dark'
-      -- vim.cmd [[colorscheme everforest]]
-      -- vim.g.everforest_background = 'soft'
+      vim.o.background = 'dark'
+      vim.cmd [[colorscheme everforest]]
+      vim.g.everforest_background = 'soft'
     end,
     opts = ...,
   },
   -- gruvbox theme
-  {
-    'ellisonleao/gruvbox.nvim',
-    priority = 1000,
-    config = function()
-      vim.o.background = 'dark' -- or "light" for light mode
-      vim.cmd [[colorscheme gruvbox]]
-    end,
-    opts = ...,
-  },
+  -- {
+  --   'ellisonleao/gruvbox.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.o.background = 'dark' -- or "light" for light mode
+  --     vim.cmd [[colorscheme gruvbox]]
+  --   end,
+  --   opts = ...,
+  -- },
+
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
@@ -1081,6 +1094,7 @@ require('lazy').setup({
           mc.clearCursors()
         else
           -- Default <esc> handler.
+          vim.api.nvim_command 'noh'
         end
       end)
 
@@ -1122,26 +1136,70 @@ require('lazy').setup({
       hl(0, 'MultiCursorDisabledSign', { link = 'SignColumn' })
     end,
   },
-  --   {
-  --     'startup-nvim/startup.nvim',
-  --     dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-file-browser.nvim' },
-  --     config = function()
-  --       require('startup').setup()
-  --     end,
-  --   },
-  -- {
-  --   'nvim-neo-tree/neo-tree.nvim',
-  --   config = function()
-  --     vim.keymap.set('n', '<leader>nt', '<cmd>Neotree<cr>', { desc = 'Neotree' })
-  --   end,
-  --   branch = 'v3.x',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim',
-  --     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-  --     'MunifTanjim/nui.nvim',
-  --     -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-  --   },
-  -- },
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  },
+  {
+    'nvim-neorg/neorg',
+    lazy = false,
+    version = '*',
+    config = function()
+      require('neorg').setup {
+        load = {
+          ['core.defaults'] = {},
+          ['core.concealer'] = {},
+          ['core.dirman'] = {
+            config = {
+              workspaces = {
+                notes = '~/notes',
+              },
+              default_workspace = 'notes',
+            },
+          },
+        },
+      }
+
+      vim.wo.foldlevel = 99
+      vim.wo.conceallevel = 2
+    end,
+  },
+  {
+    'startup-nvim/startup.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-file-browser.nvim' },
+    config = function()
+      require('startup').setup()
+    end,
+  },
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+  },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    config = function()
+      -- vim.keymap.set('n', '<leader>nt', '<cmd>Neotree<cr>', { desc = 'Neotree' })
+    end,
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -1173,4 +1231,14 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 -- vim.bo.softtabstop = 2
 -- vim.opt.smarttab = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.keymap.set('n', '<leader>sc', '<cmd>source ~/.config/nvim/init.lua<CR>', { desc = '[S]ource [C]onfig' })
+vim.filetype.add {
+  extension = {
+    slang = 'slang',
+  },
+}
+vim.keymap.set('n', 'tl', function()
+  vim.lsp.start { cmd = { 'slangd' } }
+end)
