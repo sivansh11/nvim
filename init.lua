@@ -1170,6 +1170,15 @@ require('lazy').setup({
     end,
   },
   {
+    'VonHeikemen/fine-cmdline.nvim',
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    config = function()
+      require('fine-cmdline').setup()
+      vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', { noremap = true })
+      vim.opt.cmdheight = 0
+    end,
+  },
+  {
     'startup-nvim/startup.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-file-browser.nvim' },
     config = function()
