@@ -875,43 +875,43 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  { -- Collection of various small independent plugins/modules
-    'echasnovski/mini.nvim',
-    config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
-      --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
-
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
-
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
-    end,
-  },
+  -- { -- Collection of various small independent plugins/modules
+  --   'echasnovski/mini.nvim',
+  --   config = function()
+  --     -- Better Around/Inside textobjects
+  --     --
+  --     -- Examples:
+  --     --  - va)  - [V]isually select [A]round [)]paren
+  --     --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
+  --     --  - ci'  - [C]hange [I]nside [']quote
+  --     require('mini.ai').setup { n_lines = 500 }
+  --
+  --     -- Add/delete/replace surroundings (brackets, quotes, etc.)
+  --     --
+  --     -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+  --     -- - sd'   - [S]urround [D]elete [']quotes
+  --     -- - sr)'  - [S]urround [R]eplace [)] [']
+  --     require('mini.surround').setup()
+  --
+  --     -- Simple and easy statusline.
+  --     --  You could remove this setup call if you don't like it,
+  --     --  and try some other statusline plugin
+  --     local statusline = require 'mini.statusline'
+  --     -- set use_icons to true if you have a Nerd Font
+  --     statusline.setup { use_icons = vim.g.have_nerd_font }
+  --
+  --     -- You can configure sections in the statusline by overriding their
+  --     -- default behavior. For example, here we set the section for
+  --     -- cursor location to LINE:COLUMN
+  --     ---@diagnostic disable-next-line: duplicate-set-field
+  --     statusline.section_location = function()
+  --       return '%2l:%-2v'
+  --     end
+  --
+  --     -- ... and there is more!
+  --     --  Check out: https://github.com/echasnovski/mini.nvim
+  --   end,
+  -- },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -1002,26 +1002,26 @@ require('lazy').setup({
       vim.keymap.set('n', '<C-Space>', nvim_tmux_nav.NvimTmuxNavigateNext)
     end,
   },
-  {
-    'kdheepak/lazygit.nvim',
-    lazy = true,
-    cmd = {
-      'LazyGit',
-      'LazyGitConfig',
-      'LazyGitCurrentFile',
-      'LazyGitFilter',
-      'LazyGitFilterCurrentFile',
-    },
-    -- optional for floating window border decoration
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-    -- setting the keybinding for LazyGit with 'keys' is recommended in
-    -- order to load the plugin when the command is run for the first time
-    keys = {
-      { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
-    },
-  },
+  -- {
+  --   'kdheepak/lazygit.nvim',
+  --   lazy = true,
+  --   cmd = {
+  --     'LazyGit',
+  --     'LazyGitConfig',
+  --     'LazyGitCurrentFile',
+  --     'LazyGitFilter',
+  --     'LazyGitFilterCurrentFile',
+  --   },
+  --   -- optional for floating window border decoration
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --   },
+  --   -- setting the keybinding for LazyGit with 'keys' is recommended in
+  --   -- order to load the plugin when the command is run for the first time
+  --   keys = {
+  --     { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+  --   },
+  -- },
   {
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
@@ -1174,17 +1174,17 @@ require('lazy').setup({
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
       require('fine-cmdline').setup()
-      vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', { noremap = true })
+      -- vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', { noremap = true })
       vim.opt.cmdheight = 0
     end,
   },
-  {
-    'startup-nvim/startup.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-file-browser.nvim' },
-    config = function()
-      require('startup').setup()
-    end,
-  },
+  -- {
+  --   'startup-nvim/startup.nvim',
+  --   dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-file-browser.nvim' },
+  --   config = function()
+  --     require('startup').setup()
+  --   end,
+  -- },
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
@@ -1196,6 +1196,80 @@ require('lazy').setup({
     -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
     lazy = false,
   },
+  -- {
+  --   'sphamba/smear-cursor.nvim',
+  --
+  --   opts = {
+  --     -- Smear cursor when switching buffers or windows.
+  --     smear_between_buffers = true,
+  --
+  --     -- Smear cursor when moving within line or to neighbor lines.
+  --     -- Use `min_horizontal_distance_smear` and `min_vertical_distance_smear` for finer control
+  --     smear_between_neighbor_lines = true,
+  --
+  --     -- Draw the smear in buffer space instead of screen space when scrolling
+  --     scroll_buffer_space = true,
+  --
+  --     -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
+  --     -- Smears will blend better on all backgrounds.
+  --     legacy_computing_symbols_support = true,
+  --
+  --     -- Smear cursor in insert mode.
+  --     -- See also `vertical_bar_cursor_insert_mode` and `distance_stop_animating_vertical_bar`.
+  --     smear_insert_mode = true,
+  --   },
+  -- },
+  {
+    'akinsho/toggleterm.nvim',
+    config = function()
+      -- Setup for toggleterm
+      require('toggleterm').setup {
+        size = 20, -- Terminal size (in number of lines)
+        open_mapping = '<C-`>', -- Key to toggle the terminal
+        direction = 'float', -- Terminal direction, "float" for floating window
+        float_opts = {
+          border = 'rounded', -- Border style for the floating terminal
+          winblend = 15, -- Optional transparency
+        },
+      }
+    end,
+  },
+  {
+    'm4xshen/autoclose.nvim',
+    config = function()
+      -- Setup for toggleterm
+      require('autoclose').setup {
+        keys = {
+          -- ['$'] = { escape = true, close = true, pair = '$$', disabled_filetypes = {} },
+          -- ['<'] = { escape = true, close = true, pair = '<>', disabled_filetypes = {} },
+          -- ['/*'] = { escape = true, close = true, pair = '/**/', disabled_filetypes = {} },
+        },
+      }
+    end,
+  },
+  -- {
+  --   'sphamba/smear-cursor.nvim',
+  --
+  --   opts = {
+  --     -- Smear cursor when switching buffers or windows.
+  --     smear_between_buffers = true,
+  --
+  --     -- Smear cursor when moving within line or to neighbor lines.
+  --     -- Use `min_horizontal_distance_smear` and `min_vertical_distance_smear` for finer control
+  --     smear_between_neighbor_lines = true,
+  --
+  --     -- Draw the smear in buffer space instead of screen space when scrolling
+  --     scroll_buffer_space = true,
+  --
+  --     -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
+  --     -- Smears will blend better on all backgrounds.
+  --     legacy_computing_symbols_support = true,
+  --
+  --     -- Smear cursor in insert mode.
+  --     -- See also `vertical_bar_cursor_insert_mode` and `distance_stop_animating_vertical_bar`.
+  --     smear_insert_mode = true,
+  --   },
+  -- },
   {
     'nvim-neo-tree/neo-tree.nvim',
     config = function()
@@ -1209,6 +1283,13 @@ require('lazy').setup({
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
   },
+  -- {
+  --   'ggandor/leap.nvim',
+  --   config = function()
+  --     -- test
+  --     require('leap').create_default_mappings()
+  --   end,
+  -- },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -1246,8 +1327,28 @@ vim.keymap.set('n', '<leader>sc', '<cmd>source ~/.config/nvim/init.lua<CR>', { d
 vim.filetype.add {
   extension = {
     slang = 'slang',
+    verilog = 'v',
   },
 }
 vim.keymap.set('n', 'tl', function()
   vim.lsp.start { cmd = { 'slangd' } }
+end)
+vim.keymap.set('n', '<leader>o', '<cmd>Oil<CR>', { desc = '[O]il' })
+local map = vim.keymap.set
+local function neovideScale(amount)
+  local temp = vim.g.neovide_scale_factor + amount
+
+  if temp < 0.5 then
+    return
+  end
+
+  vim.g.neovide_scale_factor = temp
+end
+
+map('n', '<C-=>', function()
+  neovideScale(0.1)
+end)
+
+map('n', '<C-->', function()
+  neovideScale(-0.1)
 end)
