@@ -30,3 +30,9 @@ vim.keymap.set("n", "<leader>cf", function()
 		lsp_format = "fallback",
 	})
 end, { desc = "format" })
+
+-- [[ Themes ]]
+vim.o.background = "dark"
+require("kanagawa")
+vim.cmd("colorscheme kanagawa")
+vim.g.everforest_background = "hard"
